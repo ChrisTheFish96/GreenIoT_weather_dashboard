@@ -1,4 +1,5 @@
-
+// Importing APIs from api_keys.js
+import { station_api, weather_api } from './api_keys.js';
 // Function to fetch weather station data
 async function fetchWeatherStations() {
     try {
@@ -23,7 +24,7 @@ async function fetchWeatherData(stationId, formattedOneHourBefore, formattedCurr
   }
   }
   
-  // Update station number
+// Update station number
 function updateSelectedStation(stationNumber) {
   const selectedStationElement = document.getElementById('selectedStation');
   if (selectedStationElement) {
