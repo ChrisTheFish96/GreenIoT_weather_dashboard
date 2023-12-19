@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+</head>
+
+<body id="page-top">    
+    <div id="dashboard">
+        <!-- Weather station data will be displayed here -->
+    </div>
+    <div id="wrapper">
+        <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#"><img src="assets/img/wasp5.png" width="102" height="102" style="margin-top: 59px;margin-left: 14px;">
+                    <div class="sidebar-brand-icon rotate-n-15"></div>
+                    <div class="sidebar-brand-text mx-3"></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link active" href="index.html" style="margin-top: 61px;"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="overview.html"><i class="far fa-eye"></i><span>Overview</span></a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="d-sm-flex justify-content-between align-items-center mb-4" style="margin-top: 39px;">
+                        <h2 class="text-dark mb-0"><strong>Weather station dashboard</strong></h2>
+                    </div>
+                    <div class="row">
+                      <div class="col-xl-6 col-lg-6 col-md-6" style="padding-bottom:25px">
+                        <h4 id="selectedStation">Choose a station to view below</h4>
+                        <div class="dropdown">
+                          <button class="btn btn-primary dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">Change station&nbsp;</button>
+                          <div class="dropdown-menu" style="max-height:200px; overflow-y:auto" id="stationDropdownMenu"></div>
+                        </div>
+                      </div>                                
+                      <div class="col" style="margin-left: 0px;">
+                        <div class="row">
+                          <div class="col">
+                            <h5>Date: <span id="currentDate"></span></h5>
+                            <h5>Time: <span id="currentTime"></span></h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+                      
+                    <div class="row" style="padding-left : 10px">
+                        <div class="col-md-6 col-xl-3 mb-4" style="margin-top: 38px;">
+                            <div class="card shadow border-start-primary py-2">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(5,29,208);">TEMPERATURE</span></div>
+                                    </div>
+                                    <div class="temp-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0"><span class="fs-2 text-center" id="temperatureValue">-- &deg;C</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <p style="margin-bottom: 0px;">Min</p>
+                                        <p id="minValue" style="margin-bottom: 16px;">--</p>
+                                      </div>
+                                      <div class="col">
+                                        <p class="text-end" style="margin-bottom: 0px;">Max</p>
+                                        <p id="maxValue" class="fs-6 text-end">--</p>
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 31px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(5,29,208);">DEW POINT</span></div>
+                                    </div>
+                                    <div class="dew-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 35px; padding-bottom: 35px;"><span class="fs-2 text-center" id="dewValue">-- &deg;C</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                      </div>
+                                      <div class="col">
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 38px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(21,208,5);">HUMIDITY</span></div>
+                                    </div>
+                                    <div class="humidity-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 32px; padding-bottom: 32px;"><span class="fs-2 text-center" id="humidityValue">-- &deg;C</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+
+                                      </div>
+                                      <div class="col">
+
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 32px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(21,208,5);">SOLAR ENERGY</span></div>
+                                    </div>
+                                    <div class="se-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 35px; padding-bottom: 35px;"><span class="fs-2 text-center" id="seValue">-- w/m2</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                      </div>
+                                      <div class="col">
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 37px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(35,166,194);">RAINFALL</span></div>
+                                    </div>
+                                    <div class="rain-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 32px; padding-bottom: 32px;"><span class="fs-2 text-center" id="rainValue">-- mm</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+
+                                      </div>
+                                      <div class="col">
+
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 32px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(21,208,5);">SOLAR RADIATION</span></div>
+                                    </div>
+                                    <div class="sr-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 35px; padding-bottom: 35px;"><span class="fs-2 text-center" id="srValue">--</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                      </div>
+                                      <div class="col">
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-3 mb-4">
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 36px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(227,164,43);">WIND SPEED</span></div>
+                                    </div>
+                                    <div class="wind-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0"><span class="fs-2 text-center" id="windValue">-- &deg;C</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                        <p style="margin-bottom: 0px;">Chill</p>
+                                        <p id="chillValue" style="margin-bottom: 16px;">-- &deg;C</p>
+                                      </div>
+                                      <div class="col">
+                                        <p class="text-end" style="margin-bottom: 0px;">Direction</p>
+                                        <p id="dirValue" class="fs-6 text-end">--</p>
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="card shadow border-start-primary py-2" style="margin-top: 32px;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col"><span style="color: rgb(227,164,43);">ATM. PRESSURE</span></div>
+                                    </div>
+                                    <div class="press-card-body">
+                                    <div class="row align-items-center no-gutters">
+                                      <div class="col me-2">
+                                        <div class="text-center text-dark fw-bold h5 mb-0" style ="padding-top: 35px; padding-bottom: 35px;"><span class="fs-2 text-center" id="pressValue">-- hPa</span></div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col">
+                                      </div>
+                                      <div class="col">
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © CBB &amp; Wasp Software 2023</span><img src="assets/img/wasp2.png" width="190" height="70" style="margin-left: 154px;"></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/chart.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/dash.js"></script>
+</body>
+
+</html>    
