@@ -1,9 +1,10 @@
 // Importing APIs from api_keys.js
-import { station_api, weather_api } from './api_keys.js';
+import { number, formattedOneHourBefore, formattedCurrentDate, station_api, weather_api } from './api_keys.js';
+
 // Function to fetch weather station data
 async function fetchWeatherStations() {
     try {
-      const station_api = await fetch(`${station_api}`);
+      var response = await fetch(`${station_api}`);
       const data = await response.json();
       return data.greenIoTModuleData;
     } catch (error) {
@@ -15,7 +16,10 @@ async function fetchWeatherStations() {
 // Function to fetch weather data based on selected station
 async function fetchWeatherData(stationId, formattedOneHourBefore, formattedCurrentDate) {
   try {
-    const response = await fetch(`${weather_api}`);
+    stationId = number
+    formattedOneHourBefore = formattedOneHourBefore
+    formattedCurrentDate = formattedCurrentDate
+    var response = await fetch(`${weather_api}`);
     const data = await response.json();
     return data.greenIoTData;
   } catch (error) {
@@ -23,51 +27,6 @@ async function fetchWeatherData(stationId, formattedOneHourBefore, formattedCurr
     return [];
   }
   }
-  
-// Update station number
-function updateSelectedStation(stationNumber) {
-  const selectedStationElement = document.getElementById('selectedStation');
-  if (selectedStationElement) {
-    selectedStationElement.textContent = `Choose a station to view below`;
-  }
-}
-
-// Update current date and time
-function updateDateTime() {
-  const currentDateElement = document.getElementById('currentDate');
-  const currentTimeElement = document.getElementById('currentTime');
-  
-  const now = new Date();
-  const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
-  const formattedTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
-  
-  if (currentDateElement && currentTimeElement) {
-    currentDateElement.textContent = formattedDate;
-    currentTimeElement.textContent = formattedTime;
-  }
-}
-
-// Function to populate dropdown with weather stations
-async function populateWeatherStations() {
-  const stations = await fetchWeatherStations();
-  const dropdownMenu = document.getElementById('stationDropdownMenu');
-  const selectedStationHeader = document.getElementById('selectedStation');
-
-  stations.forEach(station => {
-      const dropdownItem = document.createElement('a');
-      dropdownItem.classList.add('dropdown-item');
-      dropdownItem.href = '#';
-      dropdownItem.textContent = station.IoTModuleFieldDescription;
-
-      dropdownItem.addEventListener('click', async () => {
-          selectedStationHeader.textContent = station.IoTModuleFieldDescription;
-          number = station.IoTModuleFieldID
-          await updateDashboard(station);
-      });
-
-      dropdownMenu.appendChild(dropdownItem);
-  });
-}
 
 // Function to update dashboard with weather data for the selected station
 async function updateDashboard(selectedStation) {
@@ -82,17 +41,18 @@ async function updateDashboard(selectedStation) {
     const addLeadingZero = num => (num < 10 ? '0' + num : num);
   
     // Construct the one hour before date in the desired format (YYYY-MM-DDTHH:MM:SS.00)
-    const formattedOneHourBefore =
+    formattedOneHourBefore =
       `${oneHourBefore.getFullYear()}-${addLeadingZero(oneHourBefore.getMonth() + 1)}-${addLeadingZero(oneHourBefore.getDate())}T` +
       `${addLeadingZero(oneHourBefore.getHours())}:${addLeadingZero(oneHourBefore.getMinutes())}:${addLeadingZero(oneHourBefore.getSeconds())}.00`;
   
     // Construct the current date in the desired format (YYYY-MM-DDTHH:MM:SS.00)
-    const formattedCurrentDate =
+    formattedCurrentDate =
       `${currentDate.getFullYear()}-${addLeadingZero(currentDate.getMonth() + 1)}-${addLeadingZero(currentDate.getDate())}T` +
       `${addLeadingZero(currentDate.getHours())}:${addLeadingZero(currentDate.getMinutes())}:${addLeadingZero(currentDate.getSeconds())}.00`;
-  
-    const weatherData = await fetchWeatherData(selectedStation.IoTModuleFieldID, formattedOneHourBefore, formattedCurrentDate);
-  
+    number = selectedStation.IoTModuleFieldID
+    weatherData = await fetchWeatherData(number, formattedOneHourBefore, formattedCurrentDate);
+    console.log(formattedOneHourBefore)
+    console.log(formattedCurrentDate)
     console.log('Selected Station ID:', selectedStation.IoTModuleFieldID);
     console.log('Weather Data:', weatherData);
   
@@ -260,6 +220,55 @@ async function updateDashboard(selectedStation) {
   } catch (error) {
       console.error('Error updating dashboard:', error);
   }}
+
+// Update station number
+function updateSelectedStation(stationNumber) {
+  const selectedStationElement = document.getElementById('selectedStation');
+  if (selectedStationElement) {
+    selectedStationElement.textContent = `Choose a station to view below`;
+  }
+}
+
+// Update current date and time
+function updateDateTime() {
+  const currentDateElement = document.getElementById('currentDate');
+  const currentTimeElement = document.getElementById('currentTime');
+  
+  const now = new Date();
+  const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+  const formattedTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+  
+  if (currentDateElement && currentTimeElement) {
+    currentDateElement.textContent = formattedDate;
+    currentTimeElement.textContent = formattedTime;
+  }
+}
+
+updateSelectedStation(1); 
+updateDateTime(); 
+
+// Function to populate dropdown with weather stations
+async function populateWeatherStations() {
+  const stations = await fetchWeatherStations();
+  const dropdownMenu = document.getElementById('stationDropdownMenu');
+  const selectedStationHeader = document.getElementById('selectedStation');
+
+  stations.forEach(station => {
+      const dropdownItem = document.createElement('a');
+      dropdownItem.classList.add('dropdown-item');
+      dropdownItem.href = '#';
+      dropdownItem.textContent = station.IoTModuleFieldDescription;
+
+      dropdownItem.addEventListener('click', async () => {
+          selectedStationHeader.textContent = station.IoTModuleFieldDescription;
+          await updateDashboard(station);
+      });
+
+      dropdownMenu.appendChild(dropdownItem);
+  });
+}
+
+
 
   // Call function to populate dropdown with weather stations
 populateWeatherStations();
